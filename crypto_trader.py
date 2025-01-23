@@ -332,7 +332,7 @@ class CryptoTrader:
         # 利润率设置
         profit_frame = ttk.Frame(amount_frame)
         profit_frame.pack(side=tk.LEFT, padx=2)
-        ttk.Label(profit_frame, text="利润率(%):").pack(side=tk.LEFT)
+        ttk.Label(profit_frame, text="利率(%):").pack(side=tk.LEFT)
         self.profit_rate_entry = ttk.Entry(profit_frame, width=4)
         self.profit_rate_entry.pack(side=tk.LEFT)
         self.profit_rate_entry.insert(0, "2.5")
@@ -810,7 +810,7 @@ class CryptoTrader:
                 try:
                     current_page_url = self.driver.current_url
                     if current_page_url != self.current_url:
-                        self.logger.warning(f"检测到URL变化，正在恢复...")
+                        self.logger.warning(f"检测到URL变化,正在恢复...")
                         self.driver.get(self.current_url)
                         self.logger.info("已恢复到正确的监控网址")
                 except Exception as e:
@@ -2550,7 +2550,7 @@ class CryptoTrader:
 
                         # 在所有操作完成后,优雅退出并重启
                         self.logger.info("准备重启程序...")
-                        self.root.after(1000, self.restart_program)  # 1秒后重启
+                        self.root.after(5000, self.restart_program)  # 5秒后重启
                         break
                     else:
                         self.logger.warning("卖出sell_yes验证失败,重试")
@@ -2622,7 +2622,7 @@ class CryptoTrader:
                         
                         # 在所有操作完成后,优雅退出并重启
                         self.logger.info("准备重启程序...")
-                        self.root.after(1000, self.restart_program)  # 1秒后重启
+                        self.root.after(5000, self.restart_program)  # 5秒后重启
                         break
                     else:
                         self.logger.warning("卖出sell_no验证失败,重试")
@@ -2914,7 +2914,10 @@ class CryptoTrader:
         try:
             self.logger.info("正在重启程序...")
             self.update_status("正在重启程序...")
-            
+            time.sleep(1)
+            self.driver.quit()
+            time.sleep(1)
+            self.driver = None
             # 不关闭浏览器,只关闭GUI
             self.root.quit()
             
